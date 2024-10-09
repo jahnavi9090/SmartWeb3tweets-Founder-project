@@ -1,0 +1,58 @@
+# We'll use a smart contract that not only manages the investments but also mints an NFT for the user who invested in a viral tweet.
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+contract TweetBetNFT is ERC721 {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
+    struct Bet {
+        address investor;
+        uint256 amount;
+        bool paidOut;
+    }
+
+    mapping(uint256 => Bet[]) public tweetBets;
+    mapping(uint256 => uint256) public tweetTotalInvestment;
+    mapping(uint256 => uint256) public tweetViralityThreshold;
+
+    constructor() ERC721("TweetBetNFT", "TBNFT") {}
+
+    function investInTweet(uint256 tweetID) external payable {
+        require(msg.value > 0, "Investment must be greater than 0");
+        tweetBets[tweetID].push(Bet(msg.sender, msg.value, false));
+        tweetTotalInvestment[tweetID] += msg.value;
+    }
+
+    function payoutIfViral(uint256 tweetID) external {
+        require(checkVirality(tweetID), "Tweet is not viral yet");
+
+        uint256 totalInvestment = tweetTotalInvestment[tweetID];
+        for (uint256 i = 0; i < tweetBets[tweetID].length; i++) {
+            Bet storage bet = tweetBets[tweetID][i];
+            if (!bet.paidOut) {
+                uint256 payout = (bet.amount * totalInvestment) / totalInvestment;
+                payable(bet.investor).transfer(payout);
+                bet.paidOut = true;
+
+                // Mint NFT for this investor
+                mintNFT(bet.investor);
+            }
+        }
+    }
+
+    function mintNFT(address investor) internal {
+        _tokenIds.increment();
+        uint256 newItemId = _tokenIds.current();
+        _mint(investor, newItemId);
+    }
+
+    function checkVirality(uint256 tweetID) public view returns (bool) {
+        // Example: if tweet gets over 100 retweets
+        return tweetViralityThreshold[tweetID] > 100;
+    }
+}
