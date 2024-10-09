@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter Virality Bet",
+  "version": "2.0",
+  "description": "An advanced platform to bet on the virality of tweets using smart contracts and NFTs.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "https://api.twitter.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
