@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TweetBet Advanced Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f0f0f0; }
+        .container { display: flex; flex-direction: column; }
+        .card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .btn { padding: 10px; background-color: #1da1f2; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .chart { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Twitter Virality Dashboard</h1>
+        <div class="card">
+            <h2>Your Portfolio</h2>
+            <p>Total Investments: 0.10 ETH</p>
+            <p>Active Investments: 3</p>
+            <p>Total Profit: 0.25 ETH</p>
+        </div>
+
+        <div class="card">
+            <h2>Active Bets</h2>
+            <ul id="active-bets"></ul>
+        </div>
+
+        <div class="chart">
+            <h2>Virality Prediction Chart</h2>
+            <canvas id="virality-chart"></canvas>
+        </div>
+
+        <button class="btn" id="connect-wallet">Connect Wallet</button>
+    </div>
+
+    <script src="popup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('virality-chart').getContext('2d');
+        const viralityChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Tweet 1', 'Tweet 2', 'Tweet 3'],
+                datasets: [{
+                    label: 'Virality Score',
+                    data: [10, 50, 100],
+                    backgroundColor: 'rgba(29, 161, 242, 0.2)',
+                    borderColor: 'rgba(29, 161, 242, 1)',
+                    borderWidth: 2
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
