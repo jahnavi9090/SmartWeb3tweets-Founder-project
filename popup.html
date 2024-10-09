@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Virality Bet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Twitter Virality Bet</h1>
+            <button id="connect-wallet" class="btn">Connect Wallet</button>
+        </header>
+
+        <section class="portfolio">
+            <h2>Your Portfolio</h2>
+            <p><strong>Total Investments:</strong> <span id="total-investments">0 ETH</span></p>
+            <p><strong>Total Profit:</strong> <span id="total-profit">0 ETH</span></p>
+        </section>
+
+        <section class="active-bets">
+            <h2>Active Bets</h2>
+            <ul id="active-bets">
+                <!-- Active bets will be dynamically injected here -->
+            </ul>
+        </section>
+
+        <section class="virality-chart-section">
+            <h2>Virality Prediction</h2>
+            <canvas id="virality-chart"></canvas>
+        </section>
+
+        <section class="investment-actions">
+            <h2>Invest in Tweets</h2>
+            <input type="text" id="tweet-id" placeholder="Enter Tweet ID">
+            <button id="invest-in-tweet" class="btn">Invest</button>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
